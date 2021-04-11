@@ -37,20 +37,29 @@ def edit_movie():
     raise NotImplementedError()
 
 
-def edit_metadata():
+def print_movie_list():
+    for movie in movie_list:
+        for key in movie:
+            out_str = key + ': ' + movie[key]
+            print(out_str)
+
+
+def metadata_menu():
 
     meta_menu = True
     print('Metadata Menu\n')
     print('-------------\n')
     meta_options = {      'ADD':  add_metadata,
                        'DELETE':  remove_metadata,
-                    'REARRANGE':  rearrange_metadata}
+                    'REARRANGE':  rearrange_metadata,
+                        'PRINT':  print_metadata}
 
     while meta_menu:
         option = input('''You may choose from any of the following options:\n
         * Type 'add' to add movie metadata\n
         * Type 'delete' to remove movie metadata\n
         * Type 'rearrange' to rearrange movie metadata\n
+        * Type 'print' to print current metadata\n
         * Type 'back' to go back to the main menu\n
 >> ''')
         print('\n')
@@ -94,11 +103,8 @@ def rearrange_metadata():
     global movie_list
 
 
-def print_movie_list():
-    for movie in movie_list:
-        for key in movie:
-            out_str = key + ': ' + movie[key]
-            print(out_str)
+def print_metadata():
+    raise NotImplementedError()
 
 
 def end_program():
@@ -111,7 +117,7 @@ def menu():
     menu_dic = {   'ADD':  add_movie,
                   'FIND':  find_movie,
                 'REMOVE':  remove_movie,
-                  'META':  edit_metadata,
+                  'META':  metadata_menu,
                  'PRINT':  print_movie_list,
                   'EDIT':  edit_movie,
                   'QUIT':  end_program}

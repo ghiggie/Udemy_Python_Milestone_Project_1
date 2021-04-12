@@ -3,12 +3,13 @@ creator = 'Garrett Higginbotham'
 updated = 'April 11, 2021'
 
 movie_list = []
-metadata_list = []
+metadata_list = ['Title']
 running = True
 
 def welcome_message():
     print('Welcome to the movie library created by {0}'.format(creator))
     print('This is version {0}, and was last updated on {1}\n'.format(version, updated))
+
 
 def add_movie():
     global movie_list
@@ -23,18 +24,45 @@ def add_movie():
         except:
             print('''Something went wrong when trying to append to the global
             movie_list in function 'add_movie()'.''')
+            raise
 
 
 def find_movie():
-    raise NotImplementedError()
+    print('Movie Finder')
+    print('------------\n')
+
+    print('At the moment, this program can only search by movie title.')
+
+    option = input('''What is the title of the movie you would like to find?
+>> ''')
+    try:
+        for movie in movie_list:
+            if (movie['Title'] == option):
+                for key in movie:
+                    print(movie[key])
+    except KeyError:
+        print('Movie not found.')
+        raise
 
 
 def remove_movie():
-    raise NotImplementedError()
+    print('Movie Removal')
+    print('-------------\n')
+
+    option = input('''What is the title of the movie you would like to remove?
+>> ''')
+    try:
+        for movie in movie_list:
+            if (movie['Title'] == option):
+                movie_list.remove(movie)
+    except KeyError:
+        print('No such movie exists.')
+        raise
 
 
 def edit_movie():
     raise NotImplementedError()
+    raise
 
 
 def print_movie_list():
@@ -47,7 +75,7 @@ def print_movie_list():
 def metadata_menu():
 
     meta_menu = True
-    print('Metadata Menu\n')
+    print('Metadata Menu')
     print('-------------\n')
     meta_options = {      'ADD':  add_metadata,
                        'DELETE':  remove_metadata,
@@ -73,14 +101,19 @@ def metadata_menu():
                     call()
                 except NotImplementedError:
                     print('This feature has not been implemented yet.')
+                    raise
         except KeyError:
             print('Invalid entry. Please choose from the given list.')
+            raise
 
 
 def add_metadata():
+    raise NotImplementedError()
+    global movie_list
     global metadata_list
     new_data = input('What kind of data would you like to add to the metadata? ')
-    metadata_list.append(new_data)
+    metadata_list.append(new_data.lower().capitalize())
+    # Still need to add new metadata to movie_list
 
 
 def remove_metadata():
@@ -95,16 +128,20 @@ def remove_metadata():
             movie.pop(option)
     except ValueError:
         print('That is not one of the current metadata types.')
+        raise
 
 
 def rearrange_metadata():
     raise NotImplementedError()
+    raise
     global metadata_list
     global movie_list
 
 
 def print_metadata():
-    raise NotImplementedError()
+    print('The following are the current metadata types:\n')
+    for data in metadata_list:
+        print('* ' + data)
 
 
 def end_program():
@@ -122,7 +159,7 @@ def menu():
                   'EDIT':  edit_movie,
                   'QUIT':  end_program}
 
-    print('Main Menu\n')
+    print('Main Menu')
     print('---------\n')
 
     option = input('''You may choose from any of the following options:\n
@@ -142,8 +179,10 @@ def menu():
             call()
         except NotImplementedError:
             print("This feature has not been implemented yet.")
+            raise
     except KeyError:
         print('Invalid entry. Please choose from the given list.')
+        raise
 
 
 def main():

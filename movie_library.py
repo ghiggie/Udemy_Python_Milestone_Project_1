@@ -6,28 +6,28 @@ movie_list = []
 metadata_list = ['Title']
 running = True
 
-def welcome_message():
+
+def welcome_message() -> None:
     print('Welcome to the movie library created by {0}'.format(creator))
     print('This is version {0}, and was last updated on {1}\n'.format(version, updated))
 
 
-def add_movie():
+def add_movie() -> None:
     global movie_list
 
+    movie_dic = {}
     for meta in metadata_list:
-        movie_dic = {}
         meta_val = input(meta + '? ')
         movie_dic[meta] = meta_val
 
-        try:
-            movie_list.append(movie_dic)
-        except:
-            print('''Something went wrong when trying to append to the global
-            movie_list in function 'add_movie()'.''')
-            raise
+    try:
+        movie_list.append(movie_dic)
+    except:
+        print('''Something went wrong when trying to append to the global
+movie_list in function 'add_movie()'.''')
 
 
-def find_movie():
+def find_movie() -> None:
     print('Movie Finder')
     print('------------\n')
 
@@ -37,15 +37,14 @@ def find_movie():
 >> ''')
     try:
         for movie in movie_list:
-            if (movie['Title'] == option):
+            if movie['Title'] == option:
                 for key in movie:
                     print(movie[key])
     except KeyError:
         print('Movie not found.')
-        raise
 
 
-def remove_movie():
+def remove_movie() -> None:
     print('Movie Removal')
     print('-------------\n')
 
@@ -53,34 +52,32 @@ def remove_movie():
 >> ''')
     try:
         for movie in movie_list:
-            if (movie['Title'] == option):
+            if movie['Title'] == option:
                 movie_list.remove(movie)
     except KeyError:
         print('No such movie exists.')
-        raise
 
 
-def edit_movie():
+def edit_movie() -> None:
     raise NotImplementedError()
-    raise
 
 
-def print_movie_list():
+def print_movie_list() -> None:
     for movie in movie_list:
         for key in movie:
             out_str = key + ': ' + movie[key]
             print(out_str)
+        print('\n')
 
 
-def metadata_menu():
-
+def metadata_menu() -> None:
     meta_menu = True
     print('Metadata Menu')
     print('-------------\n')
-    meta_options = {      'ADD':  add_metadata,
-                       'DELETE':  remove_metadata,
-                    'REARRANGE':  rearrange_metadata,
-                        'PRINT':  print_metadata}
+    meta_options = {      'ADD': add_metadata,
+                       'DELETE': remove_metadata,
+                    'REARRANGE': rearrange_metadata,
+                        'PRINT': print_metadata}
 
     while meta_menu:
         option = input('''You may choose from any of the following options:\n
@@ -93,80 +90,77 @@ def metadata_menu():
         print('\n')
 
         try:
-            if (option.upper() == 'BACK'):
+            if option.upper() == 'BACK':
                 meta_menu = False
             else:
-                call = meta_options[option.upper()]
+                call_meta = meta_options[option.upper()]
                 try:
-                    call()
+                    call_meta()
                 except NotImplementedError:
                     print('This feature has not been implemented yet.')
-                    raise
         except KeyError:
             print('Invalid entry. Please choose from the given list.')
-            raise
 
 
-def add_metadata():
-    raise NotImplementedError()
+def add_metadata() -> None:
     global movie_list
     global metadata_list
     new_data = input('What kind of data would you like to add to the metadata? ')
     metadata_list.append(new_data.lower().capitalize())
-    # Still need to add new metadata to movie_list
+    for movie in movie_list:
+        movie[new_data.lower().capitalize()] = ""
 
 
-def remove_metadata():
+def remove_metadata() -> None:
+    # raise NotImplementedError('There are issues with this function.')
     global movie_list
     global metadata_list
 
-    option = input('''What metadata would you like to remove?\n
+    option_meta = input('''What metadata would you like to remove?\n
 >> ''')
     try:
-        metadata_list.remove(option)
-        for movie in movie_list:
-            movie.pop(option)
+        metadata_list.remove(option_meta.lower().capitalize())
     except ValueError:
         print('That is not one of the current metadata types.')
-        raise
+    else:
+        for movie in movie_list:
+            movie.pop(option_meta.lower().capitalize())
 
 
-def rearrange_metadata():
+def rearrange_metadata() -> None:
     raise NotImplementedError()
-    raise
     global metadata_list
     global movie_list
 
 
-def print_metadata():
+def print_metadata() -> None:
     print('The following are the current metadata types:\n')
     for data in metadata_list:
         print('* ' + data)
 
 
-def end_program():
+def end_program() -> None:
     global running
     running = False
 
 
-def menu():
-
-    menu_dic = {   'ADD':  add_movie,
-                  'FIND':  find_movie,
-                'REMOVE':  remove_movie,
-                  'META':  metadata_menu,
-                 'PRINT':  print_movie_list,
-                  'EDIT':  edit_movie,
-                  'QUIT':  end_program}
+def menu() -> None:
+    menu_dic = {   'ADD': add_movie,
+                  'FIND': find_movie,
+                'REMOVE': remove_movie,
+                  'META': metadata_menu,
+                 'PRINT': print_movie_list,
+                  'EDIT': edit_movie,
+                  'QUIT': end_program}
 
     print('Main Menu')
     print('---------\n')
 
-    option = input('''You may choose from any of the following options:\n
+    option_main = input('''You may choose from any of the following options:\n
     * Type 'add' to add a movie\n
     * Type 'find' to find a movie\n
     * Type 'remove' to remove a movie\n
-    * Type 'meta' to edit ovie metadata\n
+    * Type 'meta' to edit movie metadata\n
     * Type 'print' to display all movies\n
     * Type 'edit' to change a movie entry\n
     * Type 'quit' to end the program\n
@@ -174,18 +168,16 @@ def menu():
     print('\n')
 
     try:
-        call = menu_dic[option.upper()]
+        call_main = menu_dic[option_main.upper()]
         try:
-            call()
+            call_main()
         except NotImplementedError:
             print("This feature has not been implemented yet.")
-            raise
     except KeyError:
         print('Invalid entry. Please choose from the given list.')
-        raise
 
 
-def main():
+def main() -> None:
     welcome_message()
     while running:
         menu()

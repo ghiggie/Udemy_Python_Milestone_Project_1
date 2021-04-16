@@ -1,30 +1,28 @@
-version = '0.1'
-creator = 'Garrett Higginbotham'
-updated = 'April 11, 2021'
+from typing import List, Union, Dict
 
-movie_list = []
-metadata_list = ['Title']
-running = True
+version: str = '0.1'
+creator: str = 'Garrett Higginbotham'
+updated: str = 'April 11, 2021'
+
+movie_list: List[Dict[str, Union[str, int]]] = []
+metadata_list: List[str] = ['Title']
+running: bool = True
 
 
 def welcome_message() -> None:
-    print('Welcome to the movie library created by {0}'.format(creator))
-    print('This is version {0}, and was last updated on {1}\n'.format(version, updated))
+    print("Welcome to the movie library created by {0}".format(creator))
+    print("This is version {0}, and was last updated on {1}\n".format(version, updated))
 
 
 def add_movie() -> None:
     global movie_list
 
-    movie_dic = {}
+    movie_dic: Dict[str, Union[str, int]] = {}
     for meta in metadata_list:
         meta_val = input(meta + '? ')
         movie_dic[meta] = meta_val
 
-    try:
-        movie_list.append(movie_dic)
-    except:
-        print('''Something went wrong when trying to append to the global
-movie_list in function 'add_movie()'.''')
+    movie_list.append(movie_dic)
 
 
 def find_movie() -> None:
@@ -71,7 +69,7 @@ def print_movie_list() -> None:
 
 
 def metadata_menu() -> None:
-    meta_menu = True
+    meta_menu: bool = True
     print('Metadata Menu')
     print('-------------\n')
     meta_options = {      'ADD': add_metadata,
@@ -129,8 +127,8 @@ def remove_metadata() -> None:
 
 def rearrange_metadata() -> None:
     raise NotImplementedError()
-    global metadata_list
-    global movie_list
+    # global metadata_list
+    # global movie_list
 
 
 def print_metadata() -> None:

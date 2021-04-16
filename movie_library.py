@@ -1,8 +1,8 @@
-from typing import List, Union, Dict
+from typing import List, Dict, Union
 
-version: str = '0.1'
-creator: str = 'Garrett Higginbotham'
-updated: str = 'April 11, 2021'
+version: str = "0.2"
+creator: str = "Garrett Higginbotham"
+updated: str = "April 15, 2021"
 
 movie_list: List[Dict[str, Union[str, int]]] = []
 metadata_list: List[str] = ['Title']
@@ -10,8 +10,8 @@ running: bool = True
 
 
 def welcome_message() -> None:
-    print("Welcome to the movie library created by {0}".format(creator))
-    print("This is version {0}, and was last updated on {1}\n".format(version, updated))
+    print("Welcome to the movie library created by {0}.".format(creator))
+    print("This is version {0}, and was last updated on {1}.\n".format(version, updated))
 
 
 def add_movie() -> None:
@@ -20,7 +20,7 @@ def add_movie() -> None:
     movie_dic: Dict[str, Union[str, int]] = {}
     for meta in metadata_list:
         meta_val = input(meta + '? ')
-        movie_dic[meta] = meta_val
+        movie_dic[meta] = meta_val.strip()
 
     movie_list.append(movie_dic)
 
@@ -88,10 +88,10 @@ def metadata_menu() -> None:
         print('\n')
 
         try:
-            if option.upper() == 'BACK':
+            if option.strip().upper() == 'BACK':
                 meta_menu = False
             else:
-                call_meta = meta_options[option.upper()]
+                call_meta = meta_options[option.strip().upper()]
                 try:
                     call_meta()
                 except NotImplementedError:
@@ -104,7 +104,7 @@ def add_metadata() -> None:
     global movie_list
     global metadata_list
     new_data = input('What kind of data would you like to add to the metadata? ')
-    metadata_list.append(new_data.lower().capitalize())
+    metadata_list.append(new_data.strip().lower().capitalize())
     for movie in movie_list:
         movie[new_data.lower().capitalize()] = ""
 
@@ -166,7 +166,7 @@ def menu() -> None:
     print('\n')
 
     try:
-        call_main = menu_dic[option_main.upper()]
+        call_main = menu_dic[option_main.strip().upper()]
         try:
             call_main()
         except NotImplementedError:

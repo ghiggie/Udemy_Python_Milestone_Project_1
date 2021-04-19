@@ -2,7 +2,7 @@ from typing import List, Dict, Union
 
 version: str = "0.2"
 creator: str = "Garrett Higginbotham"
-updated: str = "April 15, 2021"
+updated: str = "April 18, 2021"
 
 movie_list: List[Dict[str, Union[str, int]]] = []
 metadata_list: List[str] = ['Title']
@@ -57,7 +57,18 @@ def remove_movie() -> None:
 
 
 def edit_movie() -> None:
-    raise NotImplementedError()
+    # raise NotImplementedError()
+    print('At the moment, this program can only search by movie title.')
+    movie_choice = input('''What is the title of the movie you would like to edit?
+>> ''')
+    print('Which metadata would you like to edit? You may choose from the following list:')
+    print_metadata()
+    meta_choice = input('>> ')
+    new_meta = input('''What is the new metadata value?
+>> ''')
+    for movie in movie_list:
+        if movie['Title'] == movie_choice:
+            movie[meta_choice.lower().capitalize()] = new_meta
 
 
 def print_movie_list() -> None:
